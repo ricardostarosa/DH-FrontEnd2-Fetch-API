@@ -18,11 +18,9 @@ button.addEventListener("click", (e) => {
     .then((data) => {
       //manipulamos a resposta
 
-      const { name, email, picture } = data.results[0];
-
-      dados.nome = name.first + " " + name.last;
-      dados.email = email;
-      dados.img = picture.large;
+      dados.nome = data.results[0].name.first + " " + data.results[0].name.last;
+      dados.email = data.results[0].email;
+      dados.img = data.results[0].picture.large;
 
       renderizarDadosUsuario(dados);
     });
