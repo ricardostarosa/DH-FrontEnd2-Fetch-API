@@ -1,20 +1,49 @@
 // Aqui realizamos a consulta da promisse, esperando sua resposta assíncrona
-fetch('https://randomuser.me/api/')
-    .then(response => {
-        return response.json()
+
+const dados = {};
+
+const card = document.querySelector(".card");
+const img = document.createElement("img");
+const h2 = document.createElement("h3");
+const p = document.createElement("p");
+const button = document.querySelector("button");
+
+button.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  fetch("https://randomuser.me/api/")
+    .then((response) => {
+      return response.json();
     })
-    .then(data => {
-        //manipulamos a resposta
-        console.log(data)
+    .then((data) => {
+      //manipulamos a resposta
+
+      const { name, email, picture } = data.results[0];
+
+      dados.nome = name.first + " " + name.last;
+      dados.email = email;
+      dados.img = picture.large;
+
+      renderizarDadosUsuario(dados);
     });
+});
 
-function renderizarDadosUsuario(dados) {
-    /* -------------------------------- Tarefa 1 -------------------------------- */
-    // Aqui devem desenvolver uma função que seja exibida na tela:
-    // a foto, o nome completo do usuário e o e-mail.
-    // Isto deve ser baseado nas informações que obtemos da API e inseridas no HTML.
+function renderizarDadosUsuario(data) {
+  /* -------------------------------- Tarefa 1 -------------------------------- */
+  // Aqui devem desenvolver uma função que seja exibida na tela:
+  // a foto, o nome completo do usuário e o e-mail.
+  // Isto deve ser baseado nas informações que obtemos da API e inseridas no HTML.
+
+  const dados = data;
+
+  h2.textContent = dados.nome;
+  img.setAttribute("src", dados.img);
+  p.textContent = dados.email;
+
+  card.appendChild(img);
+  card.appendChild(h2);
+  card.appendChild(p);
 }
-
 
 /* --------------------------- Tarefa 2 (extra) --------------------------- */
 // Aqui você pode ir para o ponto extra de usar o botão que está comentado no HTML.
